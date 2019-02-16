@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html ng-app="yii2AngApp">
+  <head>
+	<meta charset="utf-8">
+     <!-- CSS -->
+     <link rel="stylesheet" href="/frontend/bootstrap/css/bootstrap.min.css" />
+     <link rel="stylesheet" href="/frontend/bootstrap/css/bootstrap-theme.min.css" />
+  </head>
+  <body ng-controller="index">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#!/">Счета</a>
+            </div>      
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#!/invoice/index"><i class="glyphicon glyphicon-list-alt"></i> На рассмотрении <span id="review_count"></span></a></li>
+				<li><a href="#!/invoice/deleted"><i class="glyphicon glyphicon-trash"></i> Удаленные <span id="deleted_count"></span></a></li>
+                <li><a href="#!/invoice/create"><i class="glyphicon glyphicon-plus-sign"></i> Добавить</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="main" class="container"> 
+        <!-- Здесь будет динамическое содержимое -->
+        <div ng-view></div>    
+    </div>
+ 
+    <footer class="text-center">
+        <p>Работает на Yii2 и AngularJs</p>
+    </footer>
+     <!-- JS -->
+     <script src="/frontend/angular/angular.min.js"></script>
+     <script src="/frontend/angular-route/angular-route.js"></script>
+   <script src="/frontend/angular-file-upload/dist/angular-file-upload.js"></script>
+		<script src="/frontend/sockjs/sockjs.min.js" type="text/javascript"></script>
+		<script src="/frontend/centrifugo/centrifuge.js"></script>
+        <!-- Подключаем модули приложения -->
+        <script src="/frontend/app.js"></script>
+		<script src="/frontend/models/invoice.js"></script>
+		<script src="/frontend/models/centrifuge.js"></script>
+		<script src="/frontend/controllers/invoice.js"></script>
+
+  </body>
+</html>

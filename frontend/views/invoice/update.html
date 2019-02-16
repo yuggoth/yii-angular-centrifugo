@@ -1,0 +1,120 @@
+﻿<div>
+    <h1>Редактирование счета</h1>
+    <form role="form" name="myForm">
+        <div class= "form-group" ng-class="{error: myForm.nomenclature.$invalid}">
+            <label> Номенклатура </label>
+            <div>
+                <input name="nomenclature" ng-model="invoice.nomenclature" type= "text" class= "form-control" placeholder="Номенклатура" required/>
+                <span ng-show="myForm.nomenclature.$dirty && myForm.nomenclature.$invalid" class="help-inline">Номенклатура обязательна</span>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.description.$invalid}">
+            <label> Для чего </label>
+            <div>
+                <textarea name="description" ng-model="invoice.description" class= "form-control" placeholder= "Для чего" required></textarea>
+                <span ng-show="myForm.description.$dirty && myForm.description.$invalid" class="help-inline">Описание обязательно</span>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.amount.$invalid}">
+            <label> Сумма </label>
+            <div>
+                <input name="amount" ng-model="invoice.amount" class= "form-control" placeholder="Сумма" required/>
+                <span ng-show="myForm.amount.$dirty && myForm.amount.$invalid" class="help-inline">Сумма обязательна</span>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.contract_id.$invalid}">
+            <label> Контрагент </label>
+            	<select class="form-control" ng-options="c.id as c.name for c in contractors" ng-model="invoice.contractor_id">
+            	</select>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.cost_id.$invalid}">
+            <label> Код затраты </label>
+            <div>
+                <input name="cost_id" ng-model="invoice.cost_id" type= "number" class= "form-control" placeholder="Код затраты" required/>
+                <span ng-show="myForm.cost_id.$dirty && myForm.cost_id.$invalid" class="help-inline">Код затраты обязателен</span>
+            </div>
+        </div>
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <h3>Выберите файлы</h3>
+
+                    <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                    Много
+                    <input type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+
+                    Один
+                    <input type="file" nv-file-select="" uploader="uploader" />
+                    <input type="hidden" name="invoice_id" value="invoice.id"/>
+                </div>
+
+                <div class="col-md-9" style="margin-bottom: 40px">
+
+                    <h3>Загрузка</h3>
+                    <p>Всего файлов: {{ uploader.queue.length }}</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%">Имя</th>
+                                <th ng-show="uploader.isHTML5">Размер</th>
+                                <th ng-show="uploader.isHTML5">Прогресс</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><a href="/uploads/{{item.file.name}}" target="_blank"><strong>{{ item.file.name }}</strong></a></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td ng-show="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Загрузка
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                        <span class="glyphicon glyphicon-ban-circle"></span> Отмена
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Удалить
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <div>
+                            Прогресс:
+                            <div class="progress" style="">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                            <span class="glyphicon glyphicon-upload"></span> Загрузить все
+                        </button>
+                        <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> Отменить все
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+ 		<br /> 
+        <a href="#!/invoice/index" class="btn btn-default">Отмена</a> 
+        <button ng-click="updateInvoice(invoice);" 
+				ng-disabled="myForm.$invalid"
+                type="submit" class="btn btn-default">Сохранить</button>
+    </form>
+</div>

@@ -1,0 +1,47 @@
+﻿<div>
+    <h1>Добавление счета</h1>
+ 
+    <form role="form" name="myForm">
+        <div class= "form-group" ng-class="{error: myForm.nomenclature.$invalid}">
+            <label> Номенклатура </label>
+            <div>
+                <input name="nomenclature" ng-model="invoice.nomenclature" type= "text" class= "form-control" placeholder="Номенклатура" required/>
+                <span ng-show="myForm.nomenclature.$dirty && myForm.nomenclature.$invalid" class="help-inline">Номенклатура обязательна</span>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.description.$invalid}">
+            <label> Для чего </label>
+            <div>
+                <textarea name="description" ng-model="invoice.description" class= "form-control" placeholder= "Для чего" required></textarea>
+                <span ng-show="myForm.description.$dirty && myForm.description.$invalid" class="help-inline">Описание обязательно</span>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.amount.$invalid}">
+            <label> Сумма </label>
+            <div>
+                <input name="amount" ng-model="invoice.amount" type="number" class="form-control" placeholder="Сумма" required/>
+                <span ng-show="myForm.amount.$dirty && myForm.amount.$invalid" class="help-inline">Сумма обязательна</span>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.contractor_id.$invalid}">
+            <label> Контрагент </label>
+            <div>
+            	<select class="form-control" ng-model="invoice.contractor_id" ng-options="c.id as c.name for c in contractors">
+            	 <option value="">-- выбрать контрагента --</option>
+            	</select>
+            </div>
+        </div>
+        <div class= "form-group" ng-class="{error: myForm.cost_id.$invalid}">
+            <label> Код затраты </label>
+            <div>
+                <input name="cost_id" ng-model="invoice.cost_id" type= "number" class= "form-control" placeholder="Код затраты" required/>
+                <span ng-show="myForm.cost_id.$dirty && myForm.cost_id.$invalid" class="help-inline">Код затраты обязателен</span>
+            </div>
+        </div>
+
+        <a href="#!/invoice/index" class="btn btn-default">Отмена</a>
+        <button ng-click="createInvoice(invoice);" 
+                ng-disabled="myForm.$invalid"
+                type="submit" class="btn btn-default">Добавить</button>
+    </form>
+</div>
